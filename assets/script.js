@@ -16,53 +16,74 @@ var slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-
-document.addEventListener("DOMContentLoaded", () => {
-	const arrow_left = document.createElement("div")
+	
+	// creation de nouveau eléments html (flèches)
+	var arrow_left = document.createElement("div")
 	arrow_left.classList.add("arrow_left")
 	arrow_left.classList.add("arrow")
 	
-	const arrow_leftImg = document.createElement("img")
+	var arrow_leftImg = document.createElement("img")
 	arrow_leftImg.src = "./assets/images/arrow_left.png"
 	arrow_leftImg.alt = "Arrow-left"
 	arrow_left.append(arrow_leftImg)
 
-	const arrow_right = document.createElement("div")
+	var arrow_right = document.createElement("div")
 	arrow_right.classList.add("arrow_right")
 	arrow_right.classList.add("arrow")
 	
-	const arrow_rightImg = document.createElement("img")
+	var arrow_rightImg = document.createElement("img")
 	arrow_rightImg.src = "./assets/images/arrow_right.png"
 	arrow_rightImg.alt = "Arrow_right"
 	arrow_right.append(arrow_rightImg)
 
-	const banner = document.getElementById("banner")
+	// appel des elements de la bannière
+	var banner = document.getElementById("banner")
 	banner.append (arrow_left)
 	banner.append (arrow_right)
 
-	const dots=document.querySelector(".dots")
-	console.log(dots)
+	// compteur de slides
+	var index = 0
 
-	for(const slide of slides){
-		console.log(slide)
-		const dot=document.createElement("div")
+	// création des boutons
+	var dotSelect=()=>{
+	var dots=document.querySelector(".dots")
+	dots.innerHTML=""
+	
+
+
+	for(var i=0; i<slides.length;i++){
+		
+	
+		var dot=document.createElement("div")
 		dot.classList.add("dot")
+		dot.classList.remove("dot_selected")
+		if (i===index)
+		{
+			dot.classList.add("dot_selected")
+		}
 		dots.append(dot)
 	}
 
+	}
+	// appel de la fonction
+	dotSelect()
+	
+
+	// création des eventListener flèches gauche et droite
 	arrow_left.addEventListener("click",()=>{
 	moveslide("left")
+	dotSelect()
 	})
 	arrow_right.addEventListener("click",()=>{
 	moveslide("right")
+	dotSelect()
 	})
 
 
-	let index = 0
 
-	
-	const moveslide=(direction)=>{
-	
+	// fonction flèches 
+	var moveslide=(direction)=>{
+	// si on clique à gauche alors si index est inf ou égal à 0 = max de slides -1, sinon -1
 	if (direction==="left"){
 		if (index<=0){
 			index = slides.length -1
@@ -71,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		index -= 1
 		}
 	}
-
+	// sinon max de slide -1 =0 sinon +1
 	else {
 		if (index>=slides.length -1){
 			index=0
@@ -80,23 +101,25 @@ document.addEventListener("DOMContentLoaded", () => {
 		index += 1
 		}
 	}
-	console.log(index)
+	
 	showslide(index)
 	}
 
-	const showslide=(index)=>{
-	const slide=slides[index]
-	console.log(slide)
-	
-	const bannerslides=document.querySelector(".banner-img")
-	bannerslides.src=`./assets/images/slideshow/${slide.image}`
-	console.log(banner-img)
+	var showslide=(index)=>{
+	var slide=slides[index]
 
-	const bannertagLine=document.querySelector("#banner p")
+	
+	// Selection des images à faire défiler
+	var bannerslides=document.querySelector(".banner-img")
+	bannerslides.src=`./assets/images/slideshow/${slide.image}`
+	
+	// Selection des textes à faire defiler 
+	var bannertagLine=document.querySelector("#banner p")
 	bannertagLine.innerHTML = slides[index].tagLine
-	console.log(bannerp)
+	
+
 
 	}
 	
-});
+
 	
